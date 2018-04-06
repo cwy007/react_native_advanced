@@ -5,14 +5,36 @@ import {
   TextInput,
   StyleSheet,
   TouchableOpacity,
+  TouchableHighlight,
+  TouchableNativeFeedback,
+  TouchableWithoutFeedback,
+  Image,
 } from 'react-native';
 
 export default class LoginScreen extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      email: '',
+      password: '',
+    }
+  }
+  _touchHeader() {
+    console.log(this.refs.header.props.children);
+  }
+
+  _login() {
+    console.log(this.state.email + " " + this.state.password);
+  }
+
   render() {
     return (
       <View style={styles.container}>
         <View style={styles.header}>
-          <Text style={styles.headerText}>登录</Text>
+          <Image style={{width: 50, height: 50, borderRadius: 25}}
+            source={require('../../img/favicon.png')}
+          />
         </View>
         <View style={styles.inputRow}>
           <TextInput
@@ -21,6 +43,8 @@ export default class LoginScreen extends Component {
             placeholder="邮箱"
             autoCorrect={false}
             style={styles.inputText}
+            underlineColorAndroid="transparent"
+            onChangeText={(email) => this.setState({email})}
           />
         </View>
         <View style={styles.inputRow}>
@@ -31,11 +55,16 @@ export default class LoginScreen extends Component {
             autoCorrect={false}
             secureTextEntry={true}
             style={styles.inputText}
+            underlineColorAndroid="transparent"
+            onChangeText={(password) => this.setState({password})}
           />
         </View>
-        <TouchableOpacity style={styles.btnContainer}>
+        <TouchableHighlight
+          style={styles.btnContainer}
+          onPress={() => this._login()}
+          underlayColor="red">
           <Text style={styles.bigBtn}>登录</Text>
-        </TouchableOpacity>
+        </TouchableHighlight>
       </View>
     )
   }
