@@ -60,7 +60,7 @@ export default class LoginScreen extends Component {
           />
         </View>
         <TouchableHighlight
-          style={styles.btnContainer}
+          style={[styles.btnContainer, {backgroundColor: 'red'}]}
           onPress={() => this._login()}
           underlayColor="red">
           <Text style={styles.bigBtn}>登录</Text>
