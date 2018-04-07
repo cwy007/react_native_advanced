@@ -69,9 +69,19 @@ export default class ProductsScreen extends Component {
           renderSeparator={this._renderSeparator.bind(this)}
           renderRow={this._renderRow.bind(this)}
           enableEmptySections={true}
+          onEndReached={this._reachEnd.bind(this)}
+          onEndReachedThreshold={2}
         />
       </View>
     )
+  }
+
+  _reachEnd() {
+    if (this.state.page == -1 || !this.state.isDataLoaded) {
+      return;
+    } else {
+      this.fetchData();
+    }
   }
 
   _renderSeparator(sectionID, rowID) {
