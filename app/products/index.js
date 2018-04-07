@@ -7,6 +7,7 @@ import {
   TouchableHighlight,
   ListView,
   Alert,
+  RefreshControl,
 } from 'react-native';
 
 export default class ProductsScreen extends Component {
@@ -23,6 +24,7 @@ export default class ProductsScreen extends Component {
       isDataLoaded: false,
       dataSource: ds.cloneWithRows(this.dataRows),
       page: 1,
+      isRefreshing: false,
     }
   }
 
@@ -71,9 +73,20 @@ export default class ProductsScreen extends Component {
           enableEmptySections={true}
           onEndReached={this._reachEnd.bind(this)}
           onEndReachedThreshold={2}
+          refreshControl={
+            <RefreshControl refreshing={this.state.isRefreshing}
+              onRefresh={this._refreshData.bind(this)} />
+          }
         />
       </View>
     )
+  }
+
+  _refreshData() {
+    this.dataRows = [];
+    this.setState({page: 1, isRefreshing: true}, () => {
+      this.fetchData();
+    })
   }
 
   _reachEnd() {
