@@ -6,6 +6,7 @@ import {
   Text,
   TouchableHighlight,
   ListView,
+  Alert,
 } from 'react-native';
 
 export default class ProductsScreen extends Component {
@@ -16,28 +17,47 @@ export default class ProductsScreen extends Component {
       rowHasChanged: (r1, r2) => r1 !== r2,
     });
 
-    this.dataRows = [
-      {name: 'Ruby'},
-      {name: 'Rails'},
-      {name: 'Python'},
-      {name: 'PHP'},
-      {name: 'Django'},
-      {name: 'React'},
-      {name: 'React Native'},
-      {name: 'MongoDB'},
-      {name: 'PostgreSQL'},
-      {name: 'JavaScript'},
-      {name: 'MySQL'},
-      {name: 'Linux'},
-      {name: 'Erlang'},
-      {name: 'NodeJS'},
-      {name: 'Go'},
-    ];
+    this.dataRows = [];
 
     this.state = {
       isDataLoaded: false,
       dataSource: ds.cloneWithRows(this.dataRows),
+      page: 1,
     }
+  }
+
+  componentWillMount() {
+    this.fetchData();
+  }
+
+  fetchData() {
+    var _this = this;
+
+    if (this.state.page == -1)
+      return;
+
+    // HTML5 异步请求 fetch
+    fetch("https://eggman.tv/public/lessons?page=" + this.state.page)
+    .then(function(response) {
+      if (response.ok == true) {
+        response.json().then(function(rsp) {
+          if (rsp.status == 'ok') {
+            _this.dataRows = _this.dataRows.concat(rsp.data.lessons);
+
+            _this.setState({
+              isDataLoaded: true,
+              dataSource: _this.state.dataSource.cloneWithRows(_this.dataRows),
+              page: rsp.data.next_page,
+              isRefreshing: false,
+            })
+          } else {
+            Alert.alert("Error", "API error");
+          }
+        })
+      } else {
+        Alert.alert("Error", "Server error");
+      }
+    })
   }
 
   render() {
@@ -46,14 +66,15 @@ export default class ProductsScreen extends Component {
         <ListView
           style={styles.listView}
           dataSource={this.state.dataSource}
-          renderSeparator={this._renderSepatator.bind(this)}
+          renderSeparator={this._renderSeparator.bind(this)}
           renderRow={this._renderRow.bind(this)}
+          enableEmptySections={true}
         />
       </View>
     )
   }
 
-  _renderSepatator(sectionID, rowID) {
+  _renderSeparator(sectionID, rowID) {
     return (
       <View key={"sep_" + rowID} style={styles.rowLine}></View>
     )
@@ -67,7 +88,7 @@ export default class ProductsScreen extends Component {
     return (
       <TouchableHighlight onPress={this._touchRow.bind(this, rowData)}>
         <View style={styles.row}>
-          <Text style={styles.rowTitle}>{rowData.name}</Text>
+          <Text style={styles.rowTitle}>{rowData.title}</Text>
         </View>
       </TouchableHighlight>
     )
