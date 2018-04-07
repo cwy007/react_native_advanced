@@ -104,7 +104,11 @@ export default class ProductsScreen extends Component {
   }
 
   _touchRow(rowData) {
-
+    this.props.navigator.push({
+      title: "详情",
+      screen: "ProductShowScreen",
+      passProps: { data: rowData },
+    })
   }
 
   _renderRow(rowData, sectionID, rowId) {

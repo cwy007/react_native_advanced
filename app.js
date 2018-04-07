@@ -5,11 +5,13 @@ import FlexLayout from './app/flex_layout';
 import NavigatorTest from './app/welcome/navigator_test';
 import TabbarTest from './app/welcome/tabbar_test';
 import ProductsScreen from './app/products';
+import ProductShowScreen from '.app/products/show';
 
 // 再注册
 Navigation.registerComponent('LoginScreen', () => LoginScreen)
 Navigation.registerComponent('FlexLayout', () => FlexLayout)
 Navigation.registerComponent('ProductsScreen', () => ProductsScreen)
+Navigation.registerComponent('ProductShowScreen', () => ProductShowScreen)
 
 const AppStart = () => {
   Navigation.startTabBasedApp({
