@@ -9,6 +9,7 @@ import {
 	Platform,
   Alert,
   AlertIOS,
+  ActionSheetIOS,
 } from 'react-native';
 
 export default class OthersTest extends Component {
@@ -19,6 +20,8 @@ export default class OthersTest extends Component {
         <AlertTest />
         {/* AlertIOS */}
         <AlertIOSTest />
+
+        <ActionSheetIOSTest />
       </ScrollView>
     )
   }
@@ -51,6 +54,29 @@ class AlertIOSTest extends Component {
           ])
         }}>
           <Text style={styles.btnText}>AlertIOS.prompt</Text>
+        </TouchableHighlight>
+      )
+    } else {
+      return null;
+    }
+  }
+}
+
+class ActionSheetIOSTest extends Component {
+  render() {
+    if (Platform.OS == 'ios') {
+      return (
+        <TouchableHighlight style={styles.btn} onPress={() => {
+          ActionSheetIOS.showActionSheetWithOptions({
+            options: ['微信', '微博', '豆瓣', 'QQ', 'Cancel'],
+            cancelButtonIndex: 4,
+            title: "分享",
+            message: "请选择分享方式",
+          }, (buttonIndex) => {
+            console.log("button " + buttonIndex + " selected!");
+          })
+        }}>
+          <Text style={styles.btnText}>ActionSheetIOS</Text>
         </TouchableHighlight>
       )
     } else {
