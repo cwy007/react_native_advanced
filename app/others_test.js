@@ -10,6 +10,7 @@ import {
   Alert,
   AlertIOS,
   ActionSheetIOS,
+  Linking,
 } from 'react-native';
 
 export default class OthersTest extends Component {
@@ -22,6 +23,8 @@ export default class OthersTest extends Component {
         <AlertIOSTest />
 
         <ActionSheetIOSTest />
+
+        <LinkingTest url="https://eggman.tv" text="打开URL" />
       </ScrollView>
     )
   }
@@ -82,6 +85,24 @@ class ActionSheetIOSTest extends Component {
     } else {
       return null;
     }
+  }
+}
+
+class LinkingTest extends Component {
+  render() {
+    return (
+      <TouchableHighlight style={styles.btn} onPress={() => {
+        Linking.canOpenURL(this.props.url).then(supported => {
+          if (supported) {
+            Linking.openURL(this.props.url);
+          } else {
+            console.log('can not open url: ' + this.props.url);
+          }
+        });
+      }}>
+        <Text style={styles.btnText}>{this.props.text}</Text>
+      </TouchableHighlight>
+    )
   }
 }
 
