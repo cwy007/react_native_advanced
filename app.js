@@ -14,6 +14,7 @@ import ProductShowScreen from './app/products/show';
 import WebViewTest from './app/webview_test';
 import AnimatedTest from './app/animated_test';
 import OthersTest from './app/others_test';
+import SystemNotification from './app/system_notification';
 
 // 再注册
 Navigation.registerComponent('LoginScreen', () => LoginScreen)
@@ -23,6 +24,7 @@ Navigation.registerComponent('ProductShowScreen', () => ProductShowScreen)
 Navigation.registerComponent('WebViewTest', () => WebViewTest);
 Navigation.registerComponent('AnimatedTest', () => AnimatedTest);
 Navigation.registerComponent('OthersTest', () => OthersTest);
+Navigation.registerComponent('SystemNotification', () => SystemNotification);
 
 const LoadSavedDataFromDevice = (callback) => {
   AsyncStorage.getItem('user_data', (error, result) => {
