@@ -9,6 +9,7 @@ import {
   TouchableNativeFeedback,
   TouchableWithoutFeedback,
   Image,
+  ScrollView,
 } from 'react-native';
 
 export default class LoginScreen extends Component {
@@ -30,7 +31,10 @@ export default class LoginScreen extends Component {
 
   render() {
     return (
-      <View style={styles.container}>
+      <ScrollView
+        style={styles.container}
+        contentContainerStyle={{}}
+        horizontal={false}>
         <View style={styles.header}>
           <Image style={{width: 50, height: 50, borderRadius: 25}}
             source={require('../../img/favicon.png')}
@@ -65,7 +69,7 @@ export default class LoginScreen extends Component {
           underlayColor="red">
           <Text style={styles.bigBtn}>登录</Text>
         </TouchableHighlight>
-      </View>
+      </ScrollView>
     )
   }
 }
